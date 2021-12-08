@@ -7,11 +7,11 @@
 using namespace std;
 
 GraphGenerator::GraphGenerator(){
-
+    mainHead = nullptr;
 }
 
 void GraphGenerator::InsertVertex(int v1, AvlNode * & t){
-    if(t = nullptr){
+    if(t == nullptr){
         Node* n = new Node();
         n->data = v1;
         n->next = nullptr;
@@ -37,7 +37,7 @@ void GraphGenerator::InsertEdge(int v1, int v2){
         InsertVertex(v1, mainHead);
         AvlNode *vertex1 = Lookup(v1);
     }
-    else if(vertex2 == nullptr){
+    if(vertex2 == nullptr){
         InsertVertex(v2, mainHead);
         AvlNode *vertex2 = Lookup(v2);
     }
@@ -55,15 +55,36 @@ void GraphGenerator::InsertEdge(int v1, int v2){
 }
 
 AvlNode* GraphGenerator::Lookup(int v1){
+    AvlNode* current = mainHead;
+    while(current != nullptr){
+        if(current->head->data == v1){
+            return current;
+        }
+        else if(current->head->data > v1){
+            current = current->right;
+        }
+        else{
+            current = current->left;
+        }
+    }
+    return current;
 
 }
 
-void GraphGenerator::InOrder(){
-
+void GraphGenerator::InOrder(AvlNode* root){
+    if(root != nullptr){
+        PreOrder(root->left);
+        cout<<root->head->data<<" ";
+        PreOrder(root->right);
+    }
 }
 
-void GraphGenerator::PreOrder(){
-
+void GraphGenerator::PreOrder(AvlNode* root){
+    if(root != nullptr){
+        cout<<root->head->data<<" ";
+        PreOrder(root->left);
+        PreOrder(root->right);
+    }
 }
 
 void GraphGenerator::balance(AvlNode* & t){
@@ -117,6 +138,10 @@ void GraphGenerator::leftRightDoubleRotation(AvlNode * k3){
 void GraphGenerator::rightLeftDoubleRotation(AvlNode * k1){
     rightRotation(k1->right);
     leftRotation(k1);
+}
+
+AvlNode* GraphGenerator::getHead(){
+    return mainHead;
 }
 
 

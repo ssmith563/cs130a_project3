@@ -51,9 +51,9 @@ class GraphGenerator
 
     AvlNode* Lookup(int v1);
 
-    void InOrder();
+    void InOrder(AvlNode* root);
 
-    void PreOrder();
+    void PreOrder(AvlNode* root);
 
     void balance(AvlNode* & t);
 
@@ -64,6 +64,8 @@ class GraphGenerator
     void leftRightDoubleRotation(AvlNode * k3);
 
     void rightLeftDoubleRotation(AvlNode * k1);
+
+    AvlNode* getHead();
 
     
 };
