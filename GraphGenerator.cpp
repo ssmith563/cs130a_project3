@@ -32,7 +32,7 @@ void GraphGenerator::InsertVertex(int v1, AvlNode * & t){
 
 void GraphGenerator::InsertEdge(int v1, int v2){
     AvlNode *vertex1 = Lookup(v1);
-    AvlNode *vertex2 = Lookup(v2);
+    AvlNode *vertex2 = Lookup(v2); //good here for 1 and 2 rounds
 
     if(vertex1 == nullptr){
         InsertVertex(v1, mainHead);
@@ -42,6 +42,8 @@ void GraphGenerator::InsertEdge(int v1, int v2){
         InsertVertex(v2, mainHead);
         vertex2 = Lookup(v2); //sets 3 to 0
     }
+
+    cout<<mainHead<<" ";
 
     Node *first = new Node();
     first->data = v1;
@@ -97,29 +99,29 @@ void GraphGenerator::balance(AvlNode* & t){
 
     if(getHeight(t->left) - getHeight(t->right) > 1){
         if(getHeight(t->left->left) >= getHeight(t->left->right)){
-            if(t == mainHead){//changes mainhead
-                mainHead = t->left;
-            }
+            //if(t == mainHead){//changes mainhead
+            //    mainHead = t->left;
+            //}
             rightRotation(t);
         }
         else{
-            if(t == mainHead){//changes mainhead
-                mainHead = t->left->right;
-            }
+            //if(t == mainHead){//changes mainhead
+            //    mainHead = t->left->right;
+            //}
             leftRightDoubleRotation(t);
         }
     }
-    else if(getHeight(t->right) - getHeight(t->left) > 1){
+    else if(getHeight(t->right) - getHeight(t->left) > 1){//Balancing for first time
         if(getHeight(t->right->right) >= getHeight(t->right->left)){
-            if(t == mainHead){//changes mainhead
-                mainHead = t->right;
-            }
+            //if(t == mainHead){//changes mainhead REACHES HERE FINE
+            //    mainHead = t->right;//SWITCHES BOTH MAINHEAD AND T
+            //}
             leftRotation(t);
         }
         else{
-            if(t == mainHead){//changes mainhead
-                mainHead = t->right->left;
-            }
+            //if(t == mainHead){//changes mainhead
+            //    mainHead = t->right->left;
+            //}
             rightLeftDoubleRotation(t);
         }
     }
