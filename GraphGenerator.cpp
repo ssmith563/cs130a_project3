@@ -15,7 +15,7 @@ void GraphGenerator::InsertVertex(int v1, AvlNode * & t){
         Node* n = new Node();
         n->data = v1;
         n->next = nullptr;
-        t = new AvlNode{n, nullptr, nullptr};
+        t = new AvlNode{n, nullptr, nullptr};//maybe make reference to n
     }
     else if(v1 < t->head->data){
         InsertVertex(v1, t->left);
@@ -23,6 +23,7 @@ void GraphGenerator::InsertVertex(int v1, AvlNode * & t){
     else if(v1 > t->head->data){
         InsertVertex(v1, t->right);
     }
+
 
     balance(t);
 
@@ -35,22 +36,24 @@ void GraphGenerator::InsertEdge(int v1, int v2){
 
     if(vertex1 == nullptr){
         InsertVertex(v1, mainHead);
-        AvlNode *vertex1 = Lookup(v1);
+        vertex1 = Lookup(v1); //works
     }
     if(vertex2 == nullptr){
         InsertVertex(v2, mainHead);
-        AvlNode *vertex2 = Lookup(v2);
+        vertex2 = Lookup(v2); //sets 3 to 0
     }
 
     Node *first = new Node();
     first->data = v1;
     first->next = nullptr;
-    vertex2->tail->next = first;
+    vertex2->tail->next = first; //seg fault (maybe add &) vertex 2 = 0
+    vertex2->tail = first;
 
     Node *second = new Node();
     second->data = v2;
     second->next = nullptr;
     vertex1->tail->next = second;
+    vertex1->tail = second;
 
 }
 
@@ -61,10 +64,10 @@ AvlNode* GraphGenerator::Lookup(int v1){
             return current;
         }
         else if(current->head->data > v1){
-            current = current->right;
+            current = current->left;//switched left and right
         }
         else{
-            current = current->left;
+            current = current->right;//switched left and right
         }
     }
     return current;
@@ -94,17 +97,29 @@ void GraphGenerator::balance(AvlNode* & t){
 
     if(getHeight(t->left) - getHeight(t->right) > 1){
         if(getHeight(t->left->left) >= getHeight(t->left->right)){
+            if(t == mainHead){//changes mainhead
+                mainHead = t->left;
+            }
             rightRotation(t);
         }
         else{
+            if(t == mainHead){//changes mainhead
+                mainHead = t->left->right;
+            }
             leftRightDoubleRotation(t);
         }
     }
     else if(getHeight(t->right) - getHeight(t->left) > 1){
         if(getHeight(t->right->right) >= getHeight(t->right->left)){
+            if(t == mainHead){//changes mainhead
+                mainHead = t->right;
+            }
             leftRotation(t);
         }
         else{
+            if(t == mainHead){//changes mainhead
+                mainHead = t->right->left;
+            }
             rightLeftDoubleRotation(t);
         }
     }
@@ -119,23 +134,25 @@ void GraphGenerator::rightRotation(AvlNode * & k2){
     k2->height = max(getHeight(k2->left),getHeight(k2->right)) + 1;
     k1->height = max(getHeight(k1->left),k2->height) + 1;
     k2 = k1;
+    
 }
 
-void GraphGenerator::leftRotation(AvlNode * k1){
+void GraphGenerator::leftRotation(AvlNode * & k1){
     AvlNode *k2 = k1->right;
     k1->right = k2->left;
     k2->left = k1;
     k1->height = max(getHeight(k1->left),getHeight(k1->right)) + 1;
     k2->height = max(getHeight(k2->right),k1->height) + 1;
     k1 = k2;
+    
 }
 
-void GraphGenerator::leftRightDoubleRotation(AvlNode * k3){
+void GraphGenerator::leftRightDoubleRotation(AvlNode * & k3){
     leftRotation(k3->left);
     rightRotation(k3);
 }
 
-void GraphGenerator::rightLeftDoubleRotation(AvlNode * k1){
+void GraphGenerator::rightLeftDoubleRotation(AvlNode * & k1){
     rightRotation(k1->right);
     leftRotation(k1);
 }

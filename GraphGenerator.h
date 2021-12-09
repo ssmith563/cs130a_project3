@@ -18,7 +18,7 @@ struct AvlNode{
     AvlNode *right;
     int height;
 
-    AvlNode(Node *ele, AvlNode *lt, AvlNode *rt, int h = 0){
+    AvlNode(Node *ele, AvlNode *lt, AvlNode *rt, int h = 1){//changed height from 0 to 1
         head = ele;
         left = lt;
         right = rt;
@@ -27,9 +27,9 @@ struct AvlNode{
     }
 };
 
-int getHeight(AvlNode *t){
+int getHeight(AvlNode * & t){//    &
     if(t == nullptr){
-        return -1;
+        return 0;//why -1?
     }
     else{
         return t->height;
@@ -59,11 +59,11 @@ class GraphGenerator
 
     void rightRotation(AvlNode * & k2);
 
-    void leftRotation(AvlNode * k1);
+    void leftRotation(AvlNode * & k1);
 
-    void leftRightDoubleRotation(AvlNode * k3);
+    void leftRightDoubleRotation(AvlNode * & k3);
 
-    void rightLeftDoubleRotation(AvlNode * k1);
+    void rightLeftDoubleRotation(AvlNode * & k1);
 
     AvlNode* getHead();
 
