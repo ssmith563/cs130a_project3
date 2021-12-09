@@ -43,7 +43,6 @@ void GraphGenerator::InsertEdge(int v1, int v2){
         vertex2 = Lookup(v2); //sets 3 to 0
     }
 
-    cout<<mainHead<<" ";
 
     Node *first = new Node();
     first->data = v1;
@@ -78,9 +77,9 @@ AvlNode* GraphGenerator::Lookup(int v1){
 
 void GraphGenerator::InOrder(AvlNode* root){
     if(root != nullptr){
-        PreOrder(root->left);
+        InOrder(root->left);
         cout<<root->head->data<<" ";
-        PreOrder(root->right);
+        InOrder(root->right);
     }
 }
 
