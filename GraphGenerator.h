@@ -18,7 +18,7 @@ struct AvlNode{
     AvlNode *right;
     int height;
 
-    AvlNode(Node *ele, AvlNode *lt, AvlNode *rt, int h = 1){//changed height from 0 to 1
+    AvlNode(Node *ele, AvlNode *lt, AvlNode *rt, int h = 1){//Maybe change to include data in avl node and linked list is only for data that it neighbors
         head = ele;
         left = lt;
         right = rt;
@@ -40,6 +40,8 @@ class GraphGenerator
 {
     
     AvlNode *mainHead;
+
+    int totalNodes;
 
     public:
 
@@ -66,6 +68,8 @@ class GraphGenerator
     void rightLeftDoubleRotation(AvlNode * & k1);
 
     AvlNode* getHead();
+
+    int getTotalNodes();
 
     
 };

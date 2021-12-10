@@ -7,7 +7,19 @@
 class GraphOperator
 {
 
+    public:
 
+    GraphOperator();
+
+    void PrintConnectedComponents(GraphGenerator graph);
+
+    int* ConnectedComponents(GraphGenerator graph);
+
+    void BFS(GraphGenerator graph, AvlNode* avlNodePointer, int component, int* componentArr);
+
+    bool IsAclyclic(GraphGenerator graph);
+
+    void DFS(GraphGenerator graph, AvlNode* pointNode, int* a, int* d, int* visited, int time);
 };
 
 #endif
