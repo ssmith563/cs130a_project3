@@ -13,6 +13,8 @@ int main(int argc,char* argv[])//int argc,char* argv[]
 
     GraphGenerator avl;
 
+    GraphOperator op;
+
     /* avl.InsertEdge(8,10);
     avl.InsertEdge(3,4);
     avl.InsertEdge(1,9);
@@ -27,9 +29,9 @@ int main(int argc,char* argv[])//int argc,char* argv[]
     avl.InsertEdge(7,8); */
 
     avl.InsertEdge(1,2);
-    avl.InsertEdge(2,3);
     avl.InsertEdge(3,4);
-    //avl.InsertEdge(4,2);
+    avl.InsertEdge(4,5);
+
 
     avl.PreOrder(avl.getHead());
 
@@ -39,9 +41,7 @@ int main(int argc,char* argv[])//int argc,char* argv[]
 
     cout<<"\n";
 
-    GraphOperator op;
-
-    cout<<op.IsAclyclic(avl);
+    op.PrintConnectedComponents(avl);
     
     return 0;
 }

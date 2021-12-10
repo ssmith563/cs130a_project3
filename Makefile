@@ -1,9 +1,9 @@
-EXE	= a.out
+EXE	= project3
 
-all: a.out
+all: project3
 
-a.out: main.cpp
-	g++ -std=c++11 -g $^  $@
+project3: main.cpp
+	g++ -std=c++11  $^ -o  $@
 
 clean:
 	rm -rf ${EXE}
