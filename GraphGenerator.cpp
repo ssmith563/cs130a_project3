@@ -8,6 +8,7 @@ using namespace std;
 
 GraphGenerator::GraphGenerator(){
     mainHead = nullptr;
+    totalNodes = 0;
 }
 
 void GraphGenerator::InsertVertex(int v1, AvlNode * & t){
@@ -37,10 +38,12 @@ void GraphGenerator::InsertEdge(int v1, int v2){
     if(vertex1 == nullptr){
         InsertVertex(v1, mainHead);
         vertex1 = Lookup(v1); //works
+        totalNodes++;
     }
     if(vertex2 == nullptr){
         InsertVertex(v2, mainHead);
         vertex2 = Lookup(v2); //sets 3 to 0
+        totalNodes++;
     }
 
 
@@ -162,5 +165,7 @@ AvlNode* GraphGenerator::getHead(){
     return mainHead;
 }
 
-
+int GraphGenerator::getTotalNodes(){
+    return totalNodes;
+}
 

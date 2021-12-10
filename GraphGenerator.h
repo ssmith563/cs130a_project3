@@ -41,6 +41,8 @@ class GraphGenerator
     
     AvlNode *mainHead;
 
+    int totalNodes;
+
     public:
 
     GraphGenerator();
@@ -66,6 +68,8 @@ class GraphGenerator
     void rightLeftDoubleRotation(AvlNode * & k1);
 
     AvlNode* getHead();
+
+    int getTotalNodes();
 
     
 };
