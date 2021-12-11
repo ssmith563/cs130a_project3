@@ -84,51 +84,66 @@ void GraphOperator::BFS(GraphGenerator graph, AvlNode* avlNodePointer, int compo
 
 void GraphOperator::PrintIsAcyclic(GraphGenerator graph){
     if(IsAclyclic(graph)){
-        cout<<"Yes\n";
+        cout<<"No\n";
     }
     else{
-        cout<<"No\n";
+        cout<<"Yes\n";
     }
 }
 
 bool GraphOperator::IsAclyclic(GraphGenerator graph){
-    int visited[graph.getTotalNodes()];
+    int* visited = new int[graph.getTotalNodes()];
+    //int visited[graph.getTotalNodes()];
     int a[graph.getTotalNodes()];
     int d[graph.getTotalNodes()];
     int time = 0;
 
-    DFS(graph, graph.getHead(), a, d, visited, time);
-
-    for(int i = 0; i < graph.getTotalNodes(); i++){
-        cout<<visited[i]<<" ";
-    }
-    cout<<"\n";
-
-    for(int i = 0; i < graph.getTotalNodes(); i++){
-        if(visited[i] > 2){
-            return true;
+    int* arr = ConnectedComponents(graph);
+    int max = arr[0];
+    for(int k = 1; k < graph.getTotalNodes(); k++){
+        if (arr[k] > max){
+            max = arr[k];
         }
     }
 
-    return false;
+    AvlNode* pred = nullptr;
+    bool* cycle =new bool(false);
+
+   
+
+    for(int j = 1; j <= max; j++){
+        for(int i = 0; i < graph.getTotalNodes(); i++){
+            if(arr[i] == j){
+                DFS(graph, graph.Lookup(i+1), visited, pred, cycle);
+                break;
+            }
+        }
+    }
+
+    
+
+    return *cycle;
 }
 
-void GraphOperator::DFS(GraphGenerator graph, AvlNode* pointNode, int* a, int* d, int* visited, int time){
+void GraphOperator::DFS(GraphGenerator graph, AvlNode* pointNode, int* visited, AvlNode* pred, bool* &cycle){
     visited[pointNode->head->data -1] = 1;
-    a[pointNode->head->data -1] = time++;
+    //a[pointNode->head->data -1] = time++;
     //bool cycle = false;
 
     Node* pointer = pointNode->head->next;
+    
+    
     while(pointer != nullptr){
         if(visited[pointer->data -1] == 0){
-            DFS(graph, graph.Lookup(pointer->data), a, d, visited, time);
+            DFS(graph, graph.Lookup(pointer->data), visited, pointNode, cycle);
         }
-        else{
-            visited[pointer->data -1]++;
+        else if(pred != nullptr && pointer->data != pred->head->data){
+            *cycle = true;
         }
+
         pointer = pointer->next;
     }
 
-    d[pointNode->head->data -1] = time++;
+    //d[pointNode->head->data -1] = time++;
 }
 

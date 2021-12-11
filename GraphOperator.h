@@ -21,7 +21,7 @@ class GraphOperator
 
     bool IsAclyclic(GraphGenerator graph);
 
-    void DFS(GraphGenerator graph, AvlNode* pointNode, int* a, int* d, int* visited, int time);
+    void DFS(GraphGenerator graph, AvlNode* pointNode, int* visited, AvlNode* pred, bool* &cycle);
 };
 
 #endif
