@@ -7,41 +7,60 @@ using namespace std;
 #include "GraphOperator.h"
 #include "GraphOperator.cpp"
 #include <fstream>
+#include <sstream>
 
 int main(int argc,char* argv[])//int argc,char* argv[]
 {
-
+    
     GraphGenerator avl;
 
     GraphOperator op;
 
-    /* avl.InsertEdge(8,10);
-    avl.InsertEdge(3,4);
-    avl.InsertEdge(1,9);
-    avl.InsertEdge(3,2);
-    avl.InsertEdge(7,6);
-    avl.InsertEdge(10,6);
-    avl.InsertEdge(6,5);
-    avl.InsertEdge(9,2);
-    avl.InsertEdge(2,4);
-    avl.InsertEdge(10,5);
-    avl.InsertEdge(1,2);
-    avl.InsertEdge(7,8); */
 
-    avl.InsertEdge(1,2);
-    avl.InsertEdge(3,4);
-    avl.InsertEdge(4,5);
+    ifstream inFile1;
+    inFile1.open( argv[1] );
 
+    string line;
+    string num1;
+    string num2;
+    
+    while ( getline(inFile1,line) )
+    {
+        stringstream linestream(line);
+        while(linestream.good()){
+            getline(linestream, num1, ',');
+            getline(linestream, num2, ',');
+        }
+        int number1 = stoi(num1);
+        int number2 = stoi(num2);
 
-    avl.PreOrder(avl.getHead());
+        avl.InsertEdge(number1,number2);
 
-    cout<<"\n";
+        
+    }
+    inFile1.close();
+
+    cout<<"The in order traversal:\n";
 
     avl.InOrder(avl.getHead());
 
     cout<<"\n";
 
+    cout<<"The pre order traversal:\n";
+
+    avl.PreOrder(avl.getHead());
+
+    cout<<"\n";
+
+    cout<<"Is acyclic(Yes/No):\n";
+    
+    op.PrintIsAcyclic(avl);
+
+    cout<<"Connected Components:\n";
+
     op.PrintConnectedComponents(avl);
+
+    
     
     return 0;
 }
