@@ -3,6 +3,7 @@
 #include <string>
 #include "GraphOperator.h"
 #include <list>
+#include <string.h>
 
 
 using namespace std;
@@ -13,10 +14,10 @@ GraphOperator::GraphOperator(){
 
 void GraphOperator::PrintConnectedComponents(GraphGenerator graph){
     int* arr = ConnectedComponents(graph);
+    memset(arr, 0, sizeof(arr));
 
-    int max = arr[0];
+    int max = arr[0];//print max
     
-
     for(int k = 1; k < graph.getTotalNodes(); k++){
         if (arr[k] > max){
             max = arr[k];
@@ -34,7 +35,7 @@ void GraphOperator::PrintConnectedComponents(GraphGenerator graph){
         cout<<"\n";
     }
 
-
+    delete[] arr;
     
 }
 
@@ -120,7 +121,7 @@ bool GraphOperator::IsAclyclic(GraphGenerator graph){
         }
     }
 
-    
+    delete[] arr;
 
     return *cycle;
 }
