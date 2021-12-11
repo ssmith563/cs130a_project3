@@ -13,16 +13,34 @@ GraphOperator::GraphOperator(){
 
 void GraphOperator::PrintConnectedComponents(GraphGenerator graph){
     int* arr = ConnectedComponents(graph);
-    for(int i = 0; i < graph.getTotalNodes(); i++){
-        cout<<arr[i]<<" ";
+
+    int max = arr[0];
+    
+
+    for(int k = 1; k < graph.getTotalNodes(); k++){
+        if (arr[k] > max){
+            max = arr[k];
+        }
     }
-    cout<<"\n";
+
+    
+
+    for(int j = 1; j <= max; j++){
+        for(int i = 0; i < graph.getTotalNodes(); i++){
+            if(arr[i] == j){
+                cout<<i+1<<" ";
+            }
+        }
+        cout<<"\n";
+    }
+
+
+    
 }
 
 int* GraphOperator::ConnectedComponents(GraphGenerator graph){
     int* componentArr = new int[graph.getTotalNodes()];
-
-    componentArr = {0};
+    
     int componentNum = 1;
 
     for(int i = 0; i < graph.getTotalNodes(); i++){
@@ -31,50 +49,45 @@ int* GraphOperator::ConnectedComponents(GraphGenerator graph){
             BFS(graph, avlPointer, componentNum, componentArr);
             componentNum++;
         }
+        
     }
 
     return componentArr;
 }
 
 void GraphOperator::BFS(GraphGenerator graph, AvlNode* avlNodePointer, int component, int* componentArr){
-    //Node* pointer = avlNodePointer->head->next;
-
-    int* visited = new int[graph.getTotalNodes()];
-    visited = {0};
 
     list<int> queue;
     queue.push_back(avlNodePointer->head->data);
-
-    visited[avlNodePointer->head->data -1] = 1;
     componentArr[avlNodePointer->head->data -1] = component;
 
     int s;
 
-    /* while(pointer != nullptr){
-
-
-        pointer = pointer->next;
-    } */
-
-
     while(!queue.empty())
     {
-        // Dequeue a vertex from queue and print it
+  
         s = queue.front();
         queue.pop_front();
- 
-        // Get all adjacent vertices of the dequeued
-        // vertex s. If a adjacent has not been visited,
-        // then mark it visited and enqueue it
-        for (Node* pointer = graph.Lookup(s)->head->next; pointer != nullptr; pointer = pointer->next)
+
+        Node* pointer = graph.Lookup(s)->head->next;
+        while (pointer != NULL)
         {
-            if (visited[pointer->data -1] == 0)
+            if(componentArr[pointer->data -1] == 0)
             {
-                visited[pointer->data -1] = 1;
                 componentArr[pointer->data -1] = component;
                 queue.push_back(pointer->data);
             }
+            pointer=pointer->next;
         }
+    }
+}
+
+void GraphOperator::PrintIsAcyclic(GraphGenerator graph){
+    if(IsAclyclic(graph)){
+        cout<<"Yes\n";
+    }
+    else{
+        cout<<"No\n";
     }
 }
 

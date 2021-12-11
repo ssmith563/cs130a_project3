@@ -31,13 +31,17 @@ int main(int argc,char* argv[])//int argc,char* argv[]
     avl.InsertEdge(1,2);
     avl.InsertEdge(3,4);
     avl.InsertEdge(4,5);
+    avl.InsertEdge(6,7);
+    avl.InsertEdge(7,8);
+    avl.InsertEdge(6,8);
 
+    
 
-    avl.PreOrder(avl.getHead());
+    avl.InOrder(avl.getHead());
 
     cout<<"\n";
 
-    avl.InOrder(avl.getHead());
+    avl.PreOrder(avl.getHead());
 
     cout<<"\n";
 
